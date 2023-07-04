@@ -4,8 +4,12 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 330 3% 13%;
+    --foreground: 0 0% 100%;
+    --background-lg: 12 4% 26%;
+    --foreground-lg: 0 0% 100%;
+
+    --input-background: 10 4% 23%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
@@ -17,12 +21,15 @@
     --card-foreground: 222.2 84% 4.9%;
 
     --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --button: 129 17% 46%;
+    --input: 0 0% 44%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 129 17% 46%;
+    --primary-lg: 129 21% 54%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: 12 4% 28%;
+    --secondary-lg: 10 4% 30%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --accent: 210 40% 96.1%;
@@ -73,6 +80,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gradient-to-t from-background to-background_lg text-foreground;
+    min-height: 100dvh;
   }
 }
