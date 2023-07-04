@@ -2,11 +2,11 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-	],
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
   theme: {
     container: {
       center: true,
@@ -19,15 +19,21 @@ module.exports = {
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
+        button: "hsl(var(--button))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
+        background_lg: "hsl(var(--background-lg))",
         foreground: "hsl(var(--foreground))",
+        foreground_lg: "hsl(var(--foreground-lg))",
+        input_background: "hsl(var(--input-background))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
+          gradient: "hsl(var(--primary-lg))",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
+          gradient: "hsl(var(--secondary-lg))",
           foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {
@@ -73,4 +79,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};
