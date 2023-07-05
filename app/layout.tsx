@@ -2,7 +2,7 @@ import React from "react";
 
 import { Inter } from "next/font/google";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["cyrillic"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -14,7 +14,7 @@ const layout = ({ children }: { children: React.ReactNode }) => {
     <html>
       <body className={inter.className}>
         <header className="main text-primary-orange"></header>
-        <div className="main:before">{children}</div>
+        <div className="main:before flex justify-center">{children}</div>
         <footer></footer>
       </body>
     </html>

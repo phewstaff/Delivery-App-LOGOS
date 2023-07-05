@@ -30,7 +30,7 @@
 
     --secondary: 12 4% 28%;
     --secondary-lg: 10 4% 30%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary-foreground: 0 0% 50%;
 
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
@@ -82,5 +82,12 @@
   body {
     @apply bg-gradient-to-t from-background to-background_lg text-foreground;
     min-height: 100dvh;
+  }
+
+  a:hover,
+  a:active,
+  a:focus {
+    outline: none;
+    border: 0;
   }
 }
