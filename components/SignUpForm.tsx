@@ -8,34 +8,22 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 
-interface AuthFormProps {}
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { clientSchema, restaurantSchema } from "@/utils/validate";
 
-const AuthForm: FC<AuthFormProps> = ({}) => {
-  const formSchema = z.object({
-    username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
+interface SignUpFormProps {
+  role: "client" | "restaurant";
+  schema: typeof clientSchema | typeof restaurantSchema;
+}
 
-    mobileNumber: z.string().min(2, {
-      message: "mobile number must be at least 2 characters.",
-    }),
-
-    city: z.string().min(2, {
-      message: "city must be at least 2 characters.",
-    }),
-  });
-
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-    },
+const RegistrationForm: FC<SignUpFormProps> = ({ role, schema }) => {
+  const form = useForm<z.infer<typeof clientSchema>>({
+    resolver: zodResolver(schema),
   });
   return (
     <Form {...form}>
@@ -45,7 +33,10 @@ const AuthForm: FC<AuthFormProps> = ({}) => {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Название ресторана</FormLabel>
+              <FormLabel>
+                {role === "client" && <>Имя</>}
+                {role === "restaurant" && <>Название заведения</>}
+              </FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -123,10 +114,14 @@ const AuthForm: FC<AuthFormProps> = ({}) => {
             </FormItem>
           )}
         ></FormField>
-        <Button className="m-auto w-[90%]">Регистрация</Button>
+
+        <Button className="m-auto w-[90%]">
+          {role === "client" && <>Регистрация</>}
+          {role === "restaurant" && <>Отправить заявку</>}
+        </Button>
       </form>
     </Form>
   );
 };
 
-export default AuthForm;
+export default RegistrationForm;
