@@ -10,12 +10,12 @@ export const authApi = axios.create({
 authApi.defaults.headers.common["Content-Type"] = "application/json";
 
 export const signUpCafeFn = async (user: SignUpInput) => {
-  const response = await authApi.post<string>("/signup/cafe", user);
+  const response = await authApi.post<string>("/cafe/signup", user);
   return response.data;
 };
 
 export const signUpClientFn = async (user: SignUpInput) => {
-  const response = await authApi.post<string>("/signup/client", user);
+  const response = await authApi.post<string>("/client/signup", user);
   return response.data;
 };
 
