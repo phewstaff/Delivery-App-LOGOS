@@ -8,44 +8,85 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 
-interface AuthFormProps {}
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { clientSchema, restaurantSchema, signUpSchema } from "@/utils/validate";
+import { signUpCafeFn, signUpClientFn } from "@/api-service/authApi";
+import { useMutation } from "@tanstack/react-query";
+import { LoginInput, SignUpInput } from "@/api-service/types";
 
-const AuthForm: FC<AuthFormProps> = ({}) => {
-  const formSchema = z.object({
-    username: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
+interface SignUpFormProps {
+  role: "client" | "restaurant";
+  schema: typeof clientSchema | typeof restaurantSchema;
+}
 
-    mobileNumber: z.string().min(2, {
-      message: "mobile number must be at least 2 characters.",
-    }),
-
-    city: z.string().min(2, {
-      message: "city must be at least 2 characters.",
-    }),
+const RegistrationForm: FC<SignUpFormProps> = ({ role, schema }) => {
+  const form = useForm<z.infer<typeof signUpSchema>>({
+    resolver: zodResolver(signUpSchema),
   });
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      username: "",
-    },
-  });
+  const { mutate: signUpCafe, isLoading: isLoadingCafe } = useMutation(
+    (userData: SignUpInput) => signUpCafeFn(userData),
+    {
+      onMutate() {
+        console.log(1);
+      },
+      onSuccess: () => {
+        console.log(2);
+      },
+      onError: (error: any) => {
+        console.log(3);
+      },
+    }
+  );
+
+  const { mutate: signUpClient, isLoading: isLoadingClient } = useMutation(
+    (userData: SignUpInput) => signUpClientFn(userData),
+    {
+      onMutate() {
+        console.log(1);
+      },
+      onSuccess: () => {
+        console.log(2);
+      },
+      onError: (error: any) => {
+        console.log(3);
+      },
+    }
+  );
+
+  function onSubmit(values: z.infer<typeof signUpSchema>) {
+    if (role === "restaurant") {
+      signUpCafe(values);
+    }
+
+    if (role === "client") {
+      signUpClient(values);
+    }
+
+    console.log(values);
+  }
+
   return (
     <Form {...form}>
-      <form className="mt-6 flex flex-col gap-6" action="">
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="mt-6 flex flex-col gap-6"
+        action=""
+      >
         <FormField
           control={form.control}
-          name="username"
+          name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Название ресторана</FormLabel>
+              <FormLabel>
+                {role === "client" && <>Имя</>}
+                {role === "restaurant" && <>Название заведения</>}
+              </FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -56,7 +97,7 @@ const AuthForm: FC<AuthFormProps> = ({}) => {
 
         <FormField
           control={form.control}
-          name="mobileNumber"
+          name="phone"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Номер телефона</FormLabel>
@@ -84,7 +125,7 @@ const AuthForm: FC<AuthFormProps> = ({}) => {
 
         <FormField
           control={form.control}
-          name="username"
+          name="address"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Адрес</FormLabel>
@@ -98,7 +139,7 @@ const AuthForm: FC<AuthFormProps> = ({}) => {
 
         <FormField
           control={form.control}
-          name="username"
+          name="mail"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Электронная почта</FormLabel>
@@ -112,7 +153,7 @@ const AuthForm: FC<AuthFormProps> = ({}) => {
 
         <FormField
           control={form.control}
-          name="username"
+          name="password"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Пароль</FormLabel>
@@ -123,10 +164,14 @@ const AuthForm: FC<AuthFormProps> = ({}) => {
             </FormItem>
           )}
         ></FormField>
-        <Button className="m-auto w-[90%]">Регистрация</Button>
+
+        <Button className="m-auto w-[90%]">
+          {role === "client" && <>Регистрация</>}
+          {role === "restaurant" && <>Отправить заявку</>}
+        </Button>
       </form>
     </Form>
   );
 };
 
-export default AuthForm;
+export default RegistrationForm;

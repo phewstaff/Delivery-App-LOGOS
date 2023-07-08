@@ -1,14 +1,17 @@
-import { FC } from "react";
+"use client";
 import "@/app/globals.css";
 import { Card, CardContent } from "@/components/ui/card";
 import SignUp from "@/components/SignUp";
+import { restaurantSchema } from "@/utils/validate";
 
-interface pageProps {}
-
-const page: FC<pageProps> = ({}) => {
+const page = () => {
   return (
     <section className="w-full p-12">
-      <SignUp className="m-auto flex-col gap-4" />
+      <SignUp
+        schema={restaurantSchema}
+        role="restaurant"
+        className="m-auto flex-col gap-4"
+      />
 
       <Card className="m-auto hidden w-full md:flex">
         <CardContent className="w-full">

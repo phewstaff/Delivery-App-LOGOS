@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Inter } from "next/font/google";
+import Providers from "@/utils/provider";
 
 const inter = Inter({ subsets: ["cyrillic"] });
 
@@ -14,7 +15,9 @@ const layout = ({ children }: { children: React.ReactNode }) => {
     <html>
       <body className={inter.className}>
         <header className="main text-primary-orange"></header>
-        <div className="main:before flex justify-center">{children}</div>
+        <div className="main:before flex justify-center">
+          <Providers>{children}</Providers>
+        </div>
         <footer></footer>
       </body>
     </html>
