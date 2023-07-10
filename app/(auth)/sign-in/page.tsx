@@ -1,15 +1,21 @@
-import { FC } from "react";
 import "@/app/globals.css";
 import SignInForm from "@/components/SignInForm";
+import { Card, CardContent } from "@/components/ui/card";
 
-interface pageProps {}
-
-const page: FC<pageProps> = ({}) => {
+const page = ({}) => {
   return (
-    <section className="flex flex-col items-center ">
-      <h1 className="mt-20 text-3xl">Войти</h1>
+    <section className="min-h-screen w-full">
+      <div className="flex min-h-screen w-full flex-col items-center justify-center md:hidden">
+        <SignInForm />
+      </div>
 
-      <SignInForm />
+      <div className="hidden min-h-screen w-full items-center md:flex">
+        <Card className="m-auto flex w-[46rem] md:text-center">
+          <CardContent className="w-full">
+            <SignInForm />
+          </CardContent>
+        </Card>
+      </div>
     </section>
   );
 };
